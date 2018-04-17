@@ -1,0 +1,73 @@
+---
+---
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+      body {
+        margin: 50px 0;
+      }
+    </style>
+    <title>Repo Health Dashboard</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-columns">
+        {% assign repos = site.github.public_repositories | where_exp: "item", "item.name != 'brand'" | where_exp: "item", "item.name != 'website'" | where_exp: "item", "item.name != 'greenlight'" %}
+        {% for repo in repos %}
+          <div class="card {% if repo.open_issues_count > 0 %}border-danger{% endif %}">
+            <div class="card-body">
+              <h4 class="card-title"><a href="{{ repo.html_url }}">{{ repo.name }}</a></h4>
+              <p class="card-text">{{ repo.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <small class="text-muted">Versions</small><br/>
+                <a title="Version (Package)" href="https://www.npmjs.com/package/@{{ repo.full_name }}"><img src="https://img.shields.io/npm/v/@{{ repo.full_name }}.svg"/></a>
+                <a title="Version (Github Tag)" href="{{ repo.html_url }}/tags"><img src="https://img.shields.io/github/tag/{{ repo.full_name }}.svg"/></a>
+                <a title="Version (Github Release)" href="{{ repo.html_url }}/releases"><img src="https://img.shields.io/github/release/{{ repo.full_name }}.svg"/></a>
+              </li>
+              <li class="list-group-item">
+                <small class="text-muted">Commits since latest version</small><br/>
+                <a title="Version (Github Tag)" href="{{ repo.html_url }}/commits"><img src="https://img.shields.io/github/commits-since/{{ repo.full_name }}/latest.svg?label=commits"/></a>
+              </li>
+              <li class="list-group-item">
+                <small class="text-muted">Downloads</small><br/>
+                <a title="Downloads (npm)" href="https://www.npmjs.com/package/@{{ repo.full_name }}"><img src="https://img.shields.io/npm/dt/@{{ repo.full_name }}.svg?label=npm"/></a>
+                <a title="Downloads (Github)" href="{{ repo.html_url }}/releases"><img src="https://img.shields.io/github/downloads/{{ repo.full_name }}/total.svg?label=github"/></a>
+              </li>
+              <li class="list-group-item">
+                <small class="text-muted">Issues</small><br/>
+                <a title="Issues" href="{{ repo.html_url }}/issues"><img src="https://img.shields.io/github/issues-raw/{{ repo.full_name }}.svg?label=open"/></a>
+                <a title="Issues Stats" href="{{ repo.html_url }}/issues"><img src="https://img.shields.io/issuestats/i/github/{{ repo.full_name }}.svg?label=closure"/></a>
+              </li>
+              <li class="list-group-item">
+                <small class="text-muted">Pull Requests</small><br/>
+                <a title="Pull Requests" href="{{ repo.html_url }}/issues"><img src="https://img.shields.io/github/issues-pr-raw/{{ repo.full_name }}.svg?label=open"/></a>
+                <a title="Pull Requests Stats" href="{{ repo.html_url }}/issues"><img src="https://img.shields.io/issuestats/p/github/{{ repo.full_name }}.svg?label=closure"/></a>
+              </li>
+              <li class="list-group-item">
+                <small class="text-muted">Build</small><br/>
+                <a title="Build Status" href="https://travis-ci.org/{{ repo.full_name }}"><img src="https://img.shields.io/travis/{{ repo.full_name }}.svg?label=status"/></a>
+              </li>
+              <li class="list-group-item">
+                <small class="text-muted">Dependencies</small><br/>
+                <a title="Dependencies" href="https://libraries.io/github/{{ repo.full_name }}"><img src="https://img.shields.io/librariesio/github/{{ repo.full_name }}.svg"/></a>
+                <a href="https://snyk.io/test/github/{{ repo.full_name }}"><img src="https://snyk.io/test/github/{{ repo.full_name }}/badge.svg"/></a>
+              </li>
+            </ul>
+
+            <div class="card-footer">
+              <a title="Stars" href="{{ repo.html_url }}/stargazers"><img src="https://img.shields.io/github/stars/{{ repo.full_name }}.svg?style=social"/></a>
+              <a title="Forks" href="{{ repo.html_url }}/network"><img src="https://img.shields.io/github/forks/{{ repo.full_name }}.svg?style=social"/></a>
+              <a title="Watchers" href="{{ repo.html_url }}/watchers"><img src=" https://img.shields.io/github/watchers/{{ repo.full_name }}.svg?style=social"/></a>
+            </div>
+          </div>    
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
