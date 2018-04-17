@@ -1,1 +1,5 @@
 repository: greenlight/greenlight.github.io
+exclude:
+  - brand
+  - website
+  - greenlight.github.io
